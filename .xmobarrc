@@ -1,0 +1,51 @@
+Config { 
+	font = "xft:Fira Mono:pixelsize=12:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=14:antialias=true:hinting=true"
+                           , "xft:Font Awesome 6 Free Solid:pixelsize=12"
+                           , "xft:Font Awesome 6 Brands:pixelsize=12"
+                           ]
+       , borderColor = "black"
+       , border = TopB 
+       , bgColor = "#08021f"
+       , fgColor = "grey"
+       , alpha = 255
+       , position = Static{xpos = 0, ypos = 0, width = 1366, height = 24}
+       , textOffset = 16
+       , textOffsets = [16, 16, 15, 16, 24]
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "/home/bloodrine/.xmonad/resources"  -- default: "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Weather "VABB" ["-t","<station>: <tempC>C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run Cpu ["-t", "<total>", "-L","1","-H","50",
+                               "--normal","green","--high","red"] 10
+                    , Run Memory ["-t","<usedratio>", "-L","3","-H","50",
+                               "--normal","green","--high","red"] 10
+                    , Run Volume "default" "Master" ["-t","<status> <volume>","--","-O","<fn=2>\xf58f</fn>","-o","<fn=2>\xf58f</fn>","-C","green","-c","red"] 10
+                    , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run Wireless "wlan0" ["-t","<fn=2>\xf1eb</fn> <quality>"] 10
+                    , Run DynNetwork 
+                       [ "-t", "<fn=2>\xf019</fn> <rx>KB <fn=2>\xf093</fn> <tx>KB"
+                       ] 10
+                    , Run DiskU [("/", "<icon=icons8-ssd-drive-19.xpm/> <free>/<size>")] [] 20
+                    , Run Kbd [("us", "<icon=icons8-india-18.xpm/>")]
+                    , Run Date "<fn=2>\xf017</fn> %a %b %d %Y %H:%M:%S " "date" 10
+                    , Run Locks
+                    , Run Com "echo" ["<fn=1>\xf001</fn>"] "musicico" 3600
+                    , Run Com "/bin/sh" ["-c","~/.xmonad/spotify.sh"] "music" 20
+		              , Run Battery ["-t","<acstatus> <left>%","-L","50","-H","75","-h","green","-n","yellow","-l","red","--","-O","<fn=1>\xf583</fn>", "-o", "<fc=#9e0303><fn=1>\xf581</fn></fc>"] 10 
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %StdinReader% }{ | <fc=#ff957a>%musicico% %music%</fc> | <fc=#d8b8f5>CPU/RAM: %cpu%/%memory%</fc> | %battery% | <fc=#ffe600>%default:Master%</fc> | <fc=#04ba62>%wlan0wi%</fc> <fc=#7adeae>%dynnetwork%</fc> | %disku% | \
+                    \<fc=#ee9a00>%date%</fc>| %kbd% %VABB% " 
+       }

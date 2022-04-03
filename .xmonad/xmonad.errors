@@ -1,0 +1,7 @@
+
+xmonad.hs:188:30: warning: [-Wtabs]
+    Tab character found here, and in 7 further locations.
+    Please use spaces instead.
+    |
+188 | mySpacing = spacingRaw False            -- False=Apply even when single window
+    |                              ^^^
